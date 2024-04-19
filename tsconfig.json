@@ -29,7 +29,7 @@
       "@core/*": [
         "./src/core/*"
       ],
-      "@components": [
+      "@components/*": [
         "./src/components/*"
       ],
     }
