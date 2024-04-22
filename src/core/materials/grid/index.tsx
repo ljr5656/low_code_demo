@@ -8,7 +8,7 @@ export interface ColProps {
 	children?: React.ReactNode;
 }
 
-const Row = React.forwardRef<HTMLDivElement, RowProps>(({ children = '默认填充', ...props }, ref) => {
+const Row = React.forwardRef<HTMLDivElement, RowProps>(({ children = '默认填充Row', ...props }, ref) => {
 	console.log(props, 'props');
 	return (
 		<div>
@@ -18,7 +18,7 @@ const Row = React.forwardRef<HTMLDivElement, RowProps>(({ children = '默认填�
 		</div>
 	);
 });
-const Col = React.forwardRef<HTMLDivElement, ColProps>(({ children = '默认填充', ...props }, ref) => {
+const Col = React.forwardRef<HTMLDivElement, ColProps>(({ children = '默认填充Col', ...props }, ref) => {
 	console.log(props, 'props');
 	return (
 		<div>
@@ -31,14 +31,8 @@ const Col = React.forwardRef<HTMLDivElement, ColProps>(({ children = '默认填�
 
 export const MaterialRow = createReactMaterial(withMaterialNode<RowProps>(Row), {
 	displayName: 'Row',
-	custom: {
-		useResize: false,
-	},
 });
 
 export const MaterialCol = createReactMaterial(withMaterialNode<ColProps>(Col), {
 	displayName: 'Col',
-	custom: {
-		useResize: false,
-	},
 });

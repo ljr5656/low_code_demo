@@ -6,10 +6,11 @@ const { Text: AntdText } = Typography;
 
 export interface TextProps {
 	children?: React.ReactNode;
+	text?: string;
 }
 
 const Text = React.forwardRef<HTMLDivElement, TextProps>((props, ref) => {
-	return <AntdText ref={ref}>{props.children}</AntdText>;
+	return <AntdText ref={ref}>{props.children || props.text}</AntdText>;
 });
 
 export const MaterialText = createReactMaterial(withMaterialNode<TextProps>(Text), {
