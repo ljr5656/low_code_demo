@@ -3,6 +3,7 @@ import { MaterialButton, MaterialText, MaterialCol, MaterialRow } from '@/core/m
 import * as _ from 'lodash';
 import { MaterialPanel } from './materialsPanel';
 import { MaterialContainer } from '@/core/materials/container';
+import { SettingPanel } from './settingsPanel';
 
 export function Framework() {
 	return (
@@ -44,6 +45,9 @@ export function Framework() {
 							</Element>
 						</Element>
 					</Frame>
+				</div>
+				<div className='setting-panel' style={{ minWidth: '200px' }}>
+					<SettingPanel />
 				</div>
 			</Editor>
 		</div>
