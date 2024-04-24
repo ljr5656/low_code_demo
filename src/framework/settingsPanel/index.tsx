@@ -47,7 +47,7 @@ export function SettingPanel() {
 	}, [nodeId]);
 
 	return (
-		<div className={}>
+		<div className={''}>
 			<Form
 				layout='vertical'
 				form={form}

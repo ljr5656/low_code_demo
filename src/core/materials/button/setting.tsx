@@ -47,7 +47,7 @@ export function ButtonSetting() {
 	}, [nodeId]);
 
 	return (
-		<div className={}>
+		<div className={''}>
 			<Form
 				layout='vertical'
 				form={form}
