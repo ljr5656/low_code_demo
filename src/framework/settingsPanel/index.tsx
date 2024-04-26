@@ -1,23 +1,73 @@
+import React from 'react';
+import { Card, Empty, Form, Typography } from 'antd';
 import { useEditor } from '@craftjs/core';
+import { merge } from 'lodash';
 
 export function SettingPanel() {
-	const editor = useEditor(state => {
+	const [form] = Form.useForm();
+	const {
+		id: nodeId,
+		currentNodeProps,
+		actions,
+		SettingRender,
+	} = useEditor(state => {
 		const [currentNodeId] = state.events.selected;
-		let selected;
 
 		if (currentNodeId) {
-			selected = {
+			const { data, related } = state.nodes[currentNodeId];
+
+			return {
 				id: currentNodeId,
-				name: state.nodes[currentNodeId].data.name,
-				settings: state.nodes[currentNodeId].related && state.nodes[currentNodeId].related.settings,
+				currentNodeProps: data.props,
+				SettingRender: related?.settingRender,
 			};
 		}
-		console.log(`state`, state);
-		return {
-			selected,
-		};
 	});
-	const { selected } = editor;
-	console.log(`editor`, editor);
-	return selected ? <div>{selected.name}</div> : null;
+
+	const handleFormChange = async (changeValues: any, allValues: any) => {
+		if (nodeId) {
+			actions.setProp(nodeId, setterProps => {
+				return merge(setterProps, changeValues);
+			});
+		}
+		return true;
+	};
+
+	// 当前编辑的组件发生改变，nodeId副作用更新了
+	React.useEffect(() => {
+		if (nodeId) {
+			console.log('switchNodeId', nodeId, currentNodeProps);
+
+			/** 切换组件清除setter配置 */
+			form.resetFields();
+
+			/** 设置新组件内容属性配置 */
+			form.setFieldsValue(currentNodeProps);
+		}
+	}, [nodeId]);
+
+	return (
+		<div className={''}>
+			<Form
+				layout='vertical'
+				form={form}
+				labelCol={{
+					span: 24,
+				}}
+				wrapperCol={{
+					span: 24,
+				}}
+				onValuesChange={handleFormChange}
+				onFinish={handleFormChange}
+			>
+				{SettingRender ? (
+					<SettingRender />
+				) : (
+					<Card size='small'>
+						<Typography.Text type='secondary'>暂无选中组件，点击画布中的组件可以进行选择。</Typography.Text>
+					</Card>
+				)}
+			</Form>
+		</div>
+	);
 }
